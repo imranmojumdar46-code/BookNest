@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% from "_macros.html" import book_card with context %}
+{% block title %}Books{% endblock %}
+{% block content %}
+<h1>📖 Books</h1>
+<form method="get" class="filters">
+  <input type="search" name="q" value="{{ q }}" placeholder="Search title or author…" aria-label="Search">
+  <select name="category" aria-label="Category">
+    <option value="">All categories</option>
+    {% for c in categories %}<option value="{{ c }}" {{ 'selected' if c == cat }}>{{ c }}</option>{% endfor %}
+  </select>
+  <select name="sort" aria-label="Sort">
+    <option value="new" {{ 'selected' if sort == 'new' }}>Newest first</option>
+    <option value="price_asc" {{ 'selected' if sort == 'price_asc' }}>Price: low to high</option>
+    <option value="price_desc" {{ 'selected' if sort == 'price_desc' }}>Price: high to low</option>
+    <option value="title" {{ 'selected' if sort == 'title' }}>Title A–Z</option>
+  </select>
+  <button class="btn" type="submit">Apply</button>
+</form>
+<p class="muted">{{ books|length }} book{{ '' if books|length == 1 else 's' }} found{% if cat %} in <strong>{{ cat }}</strong>{% endif %}</p>
+<div class="grid">{% for b in books %}{{ book_card(b) }}{% else %}<p>No books match your search.</p>{% endfor %}</div>
+{% endblock %}

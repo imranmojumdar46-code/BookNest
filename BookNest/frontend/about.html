@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %}About{% endblock %}
+{% block content %}
+<section class="page-head">
+  <h1>About BookNest</h1>
+  <p class="muted">A community book store and library where readers share the books they love.</p>
+</section>
+
+<section class="two-col" aria-labelledby="story-title">
+  <article>
+    <h2 id="story-title">Our story</h2>
+    <p>BookNest started as a full-stack learning project: a real web application with a front end, a Python back end and a database. Members can register, log in and manage their own listings, while visitors can browse and search the catalogue.</p>
+    <p>Every feature — from login sessions to book management — is built the way production sites do it, just small enough to understand end to end.</p>
+  </article>
+  <figure>
+    <img src="{{ url_for('assets', folder='images', filename='about.svg') }}" alt="A stack of books next to a reading lamp" width="420" height="320" loading="lazy">
+    <figcaption class="muted small">Good books, good light.</figcaption>
+  </figure>
+</section>
+
+<section aria-labelledby="flow-title">
+  <h2 id="flow-title">How a request travels</h2>
+  <ol class="steps card">
+    <li>The browser sends a request (HTML, CSS and JavaScript on the front end).</li>
+    <li>A Flask route receives it, a controller validates the input and checks the login session.</li>
+    <li>The controller reads or writes the SQLite database.</li>
+    <li>Flask renders an HTML page and sends it back.</li>
+  </ol>
+</section>
+
+<section aria-labelledby="values-title">
+  <h2 id="values-title">What we value</h2>
+  <div class="features">
+    <article class="card"><div class="big" aria-hidden="true">📚</div><h3>Reading for everyone</h3><p>Every category, every budget, one friendly shelf.</p></article>
+    <article class="card"><div class="big" aria-hidden="true">🔒</div><h3>Safe &amp; private</h3><p>Hashed passwords, CSRF protection and validated input.</p></article>
+    <article class="card"><div class="big" aria-hidden="true">🤝</div><h3>Community first</h3><p>Members own and manage the books they list.</p></article>
+  </div>
+</section>
+
+<section aria-labelledby="tech-title">
+  <h2 id="tech-title">Technology</h2>
+  <ul class="chips">
+    <li class="chip">HTML5</li><li class="chip">CSS3</li><li class="chip">JavaScript</li>
+    <li class="chip">Python Flask</li><li class="chip">SQLite</li><li class="chip">Flask sessions</li>
+  </ul>
+</section>
+{% endblock %}

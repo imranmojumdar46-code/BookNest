@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}Contact{% endblock %}
+{% block content %}
+<section class="page-head">
+  <h1>Contact &amp; feedback</h1>
+  <p class="muted">Questions or suggestions? Send us a message — it is stored safely in our database.</p>
+</section>
+<div class="contact-layout">
+  <section aria-label="Contact form">
+    <form method="post" class="form" data-validate novalidate>
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <label>Name
+        <input type="text" name="name" value="{{ form.get('name', current_user or '') }}" data-required data-min="2" maxlength="80" autocomplete="name">
+      </label>
+      <label>Email
+        <input type="email" name="email" value="{{ form.get('email', '') }}" data-required data-email maxlength="120" autocomplete="email">
+      </label>
+      <label>Message
+        <textarea name="message" rows="6" data-required data-min="10" maxlength="1000">{{ form.get('message', '') }}</textarea>
+      </label>
+      <button class="btn" type="submit">Send message</button>
+    </form>
+  </section>
+  <aside>
+    <figure>
+      <img src="{{ url_for('assets', folder='images', filename='contact.svg') }}" alt="An envelope with a check mark" width="420" height="300" loading="lazy">
+    </figure>
+    <address class="card info-list">
+      <p><strong>📍 Visit</strong><br>12 Library Lane, Booktown</p>
+      <p><strong>✉️ Email</strong><br>hello@booknest.example</p>
+      <p><strong>🕘 Hours</strong><br>Mon–Sat, 9:00 – 18:00</p>
+    </address>
+  </aside>
+</div>
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}Categories{% endblock %}
+{% block content %}
+<h1>🗂️ Categories</h1>
+<p class="muted">Pick a category to see its books.</p>
+<div class="grid cat-grid">
+  {% for c in categories %}
+  <a class="card cat-card" href="{{ url_for('books.catalog', category=c) }}">
+    <span class="cat-icon">{{ cat_icons.get(c, '📚') }}</span>
+    <h3>{{ c }}</h3>
+    <p class="muted">{{ counts.get(c, 0) }} book{{ '' if counts.get(c, 0) == 1 else 's' }}</p>
+  </a>
+  {% endfor %}
+</div>
+{% endblock %}

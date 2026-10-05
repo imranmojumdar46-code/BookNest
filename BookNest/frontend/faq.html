@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}FAQ{% endblock %}
+{% block content %}
+<section class="narrow">
+  <h1>❓ Frequently asked questions</h1>
+  <details open><summary>Do I need an account to browse books?</summary><p>No. Anyone can browse, search and view book details. An account is only needed to add or manage books.</p></details>
+  <details><summary>How do I list a book?</summary><p>Register, log in, then open your Dashboard and press “Add book”. Fill in the details and optionally upload a cover.</p></details>
+  <details><summary>Can I edit or delete other people's books?</summary><p>No. Only the member who listed a book can edit or delete it.</p></details>
+  <details><summary>Is my password safe?</summary><p>Yes. Passwords are never stored as plain text; they are hashed before being saved in the database.</p></details>
+  <details><summary>Which images can I upload?</summary><p>PNG, JPG, GIF or WEBP files up to 2 MB.</p></details>
+  <details><summary>How do I switch to dark mode?</summary><p>Use the 🌙 button in the top bar. Your choice is remembered on this device.</p></details>
+  <details><summary>How can I contact you?</summary><p>Use the <a href="{{ url_for('main.contact') }}">Contact page</a>. Messages are stored securely in our database.</p></details>
+</section>
+{% endblock %}

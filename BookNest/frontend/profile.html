@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}Profile{% endblock %}
+{% block content %}
+<section class="narrow">
+  <h1>👤 My profile</h1>
+  <div class="card profile-card">
+    <div class="avatar">{{ user.name[:1]|upper }}</div>
+    <div>
+      <h3>{{ user.name }}</h3>
+      <p class="muted">{{ user.email }}<br>Member since {{ user.registration_date[:10] }} · {{ count }} book{{ '' if count == 1 else 's' }} listed</p>
+    </div>
+  </div>
+
+  <h2>Update name</h2>
+  <form method="post" class="form" data-validate novalidate>
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <input type="hidden" name="action" value="name">
+    <label>Full name
+      <input type="text" name="name" value="{{ user.name }}" data-required data-min="2" maxlength="80">
+    </label>
+    <button class="btn" type="submit">Save name</button>
+  </form>
+
+  <h2>Change password</h2>
+  <form method="post" class="form" data-validate novalidate>
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <input type="hidden" name="action" value="password">
+    <label>Current password
+      <input type="password" name="current" data-required autocomplete="current-password">
+    </label>
+    <label>New password
+      <input type="password" name="new_password" id="password" data-required data-password autocomplete="new-password">
+      <small class="hint">At least 8 characters with a letter and a number.</small>
+      <span class="strength" id="strength"></span>
+    </label>
+    <label>Confirm new password
+      <input type="password" name="confirm" data-required data-match="new_password" autocomplete="new-password">
+    </label>
+    <button class="btn" type="submit">Change password</button>
+  </form>
+</section>
+{% endblock %}

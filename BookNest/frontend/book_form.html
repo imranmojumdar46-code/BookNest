@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}{{ mode }} book{% endblock %}
+{% block content %}
+{% set v = form if form else (book if book else {}) %}
+<section class="narrow">
+  <h1>{{ mode }} book</h1>
+  <form method="post" enctype="multipart/form-data" class="form" data-validate novalidate>
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <label>Title
+      <input type="text" name="title" value="{{ v.get('title', '') }}" data-required maxlength="150">
+    </label>
+    <label>Author
+      <input type="text" name="author" value="{{ v.get('author', '') }}" data-required maxlength="100">
+    </label>
+    <label>Category
+      <select name="category" data-required>
+        <option value="">Choose…</option>
+        {% for c in categories %}<option value="{{ c }}" {{ 'selected' if c == v.get('category') }}>{{ c }}</option>{% endfor %}
+      </select>
+    </label>
+    <label>Price ($)
+      <input type="number" name="price" step="0.01" min="0" max="100000" value="{{ v.get('price', '') }}" data-required>
+    </label>
+    <label>Description <small class="hint">(optional, max 1000 characters)</small>
+      <textarea name="description" rows="4" maxlength="1000">{{ v.get('description', '') or '' }}</textarea>
+    </label>
+    <label>Cover image <small class="hint">(optional · PNG/JPG/GIF/WEBP · max 2 MB)</small>
+      <input type="file" name="image" id="image" accept="image/*">
+      <img id="preview" class="preview" alt="" hidden>
+    </label>
+    <div class="row-between">
+      <a class="btn btn-outline" href="{{ url_for('user.dashboard') }}">Cancel</a>
+      <button class="btn" type="submit">Save book</button>
+    </div>
+  </form>
+</section>
+{% endblock %}

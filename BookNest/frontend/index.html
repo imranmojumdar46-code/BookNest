@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% from "_macros.html" import book_card with context %}
+{% block title %}Home{% endblock %}
+{% block content %}
+<section class="hero" aria-labelledby="hero-title">
+  <div class="hero-text">
+    <span class="eyebrow">Online Book Store &amp; Library</span>
+    <h1 id="hero-title">Find your next <span class="accent">favourite book</span></h1>
+    <p>Browse the shelves, search by title or author, or join and list your own books for the community.</p>
+    <form action="{{ url_for('books.catalog') }}" method="get" class="hero-search" role="search">
+      <input type="search" name="q" placeholder="Search a title or author…" aria-label="Search books">
+      <button class="btn" type="submit">Search</button>
+    </form>
+    <div class="hero-actions">
+      <a class="btn btn-outline" href="{{ url_for('main.categories') }}">Browse categories</a>
+      {% if not current_user %}<a class="btn btn-outline" href="{{ url_for('auth.register') }}">Join free</a>{% endif %}
+    </div>
+  </div>
+  <figure class="hero-art">
+    <img src="{{ url_for('assets', folder='images', filename='library-hero.jpg') }}" alt="Students reading and studying at long tables in a library with tall bookshelves" width="700" height="524">
+    <figcaption>Our reading room — a quiet place to find your next book.</figcaption>
+  </figure>
+</section>
+
+<section class="stats band" aria-label="Site statistics">
+  <div><strong>{{ stats.b }}</strong><span>Books listed</span></div>
+  <div><strong>{{ stats.c }}</strong><span>Categories</span></div>
+  <div><strong>{{ stats.u }}</strong><span>Members</span></div>
+</section>
+
+<section aria-labelledby="cat-title">
+  <div class="row-between"><h2 id="cat-title">Browse by category</h2><a href="{{ url_for('main.categories') }}">See all →</a></div>
+  <div class="chips">
+    {% for c in categories %}<a class="chip" href="{{ url_for('books.catalog', category=c) }}">{{ cat_icons.get(c, '📚') }} {{ c }}</a>{% endfor %}
+  </div>
+</section>
+
+<section aria-labelledby="latest-title">
+  <div class="row-between"><h2 id="latest-title">Latest arrivals</h2><a href="{{ url_for('books.catalog') }}">View all →</a></div>
+  <div class="grid">{% for b in latest %}{{ book_card(b) }}{% else %}<p>No books yet.</p>{% endfor %}</div>
+</section>
+
+<section aria-labelledby="how-title">
+  <h2 id="how-title" class="center">How BookNest works</h2>
+  <div class="features">
+    <article class="card"><div class="big" aria-hidden="true">1️⃣</div><h3>Create an account</h3><p>Register in seconds. Your password is stored hashed and safe.</p></article>
+    <article class="card"><div class="big" aria-hidden="true">2️⃣</div><h3>Add your books</h3><p>List a title with price, category, description and a cover photo.</p></article>
+    <article class="card"><div class="big" aria-hidden="true">3️⃣</div><h3>Manage everything</h3><p>Edit or remove listings anytime from your personal dashboard.</p></article>
+  </div>
+</section>
+
+{% if not current_user %}
+<section class="cta" aria-labelledby="cta-title">
+  <h2 id="cta-title">Ready to share your library?</h2>
+  <p>Join BookNest and start listing books today.</p>
+  <a class="btn" href="{{ url_for('auth.register') }}">Create free account</a>
+</section>
+{% endif %}
+{% endblock %}

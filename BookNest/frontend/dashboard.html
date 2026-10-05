@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+<h1>Hello, {{ user.name }} 👋</h1>
+<p class="muted">{{ user.email }} · member since {{ user.registration_date[:10] }} · <a href="{{ url_for('user.profile') }}">Edit profile</a></p>
+
+<div class="stats">
+  <div class="card stat"><strong>{{ books|length }}</strong><span>My books</span></div>
+  <div class="card stat"><strong>${{ '%.2f' % total }}</strong><span>Total listed value</span></div>
+</div>
+
+<div class="row-between">
+  <h2>My books</h2>
+  <div class="actions">
+    <a class="btn btn-outline" href="{{ url_for('user.profile') }}">👤 Profile</a>
+    <a class="btn btn-outline" href="{{ url_for('user.wishlist') }}">♥ Wishlist</a>
+    <a class="btn" href="{{ url_for('books.add') }}">➕ Add book</a>
+  </div>
+</div>
+
+{% if books %}
+<div class="table-wrap">
+<table>
+  <thead><tr><th>Title</th><th>Author</th><th>Category</th><th>Price</th><th>Actions</th></tr></thead>
+  <tbody>
+  {% for b in books %}
+    <tr>
+      <td data-label="Title"><a href="{{ url_for('books.detail', book_id=b.book_id) }}">{{ b.title }}</a></td>
+      <td data-label="Author">{{ b.author }}</td>
+      <td data-label="Category">{{ b.category }}</td>
+      <td data-label="Price">${{ '%.2f' % b.price }}</td>
+      <td data-label="Actions" class="actions">
+        <a class="btn btn-outline btn-sm" href="{{ url_for('books.edit', book_id=b.book_id) }}">✏️ Edit</a>
+        <form method="post" action="{{ url_for('books.delete', book_id=b.book_id) }}" class="inline js-confirm" data-msg="Delete '{{ b.title }}'?">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+          <button class="btn btn-danger btn-sm" type="submit">🗑️ Delete</button>
+        </form>
+      </td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+</div>
+{% else %}
+  <p>You haven't added any books yet.</p>
+{% endif %}
+{% endblock %}

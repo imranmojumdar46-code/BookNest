@@ -1,0 +1,17 @@
+{% macro book_card(b) %}
+<article class="card book-card">
+  <a class="card-link" href="{{ url_for('books.detail', book_id=b.book_id) }}" aria-label="View {{ b.title }}">
+    {% if b.image %}
+      <img class="cover" src="{{ url_for('assets', folder='images', filename='uploads/' ~ b.image) }}" alt="Cover of {{ b.title }}" loading="lazy">
+    {% else %}
+      <div class="cover placeholder hue-{{ b.book_id % 12 }}" aria-hidden="true"><span>{{ b.title[:1] }}</span></div>
+    {% endif %}
+    <div class="card-body">
+      <span class="tag">{{ cat_icons.get(b.category, '📚') }} {{ b.category }}</span>
+      <h3>{{ b.title }}</h3>
+      <p class="muted">by {{ b.author }}</p>
+      <p class="price">${{ '%.2f' % b.price }}</p>
+    </div>
+  </a>
+</article>
+{% endmacro %}
